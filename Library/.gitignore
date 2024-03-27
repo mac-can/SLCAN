@@ -1,0 +1,6 @@
+.objects
+*.dylib
+*.so.*
+*.dll
+*.lib
+*.a
