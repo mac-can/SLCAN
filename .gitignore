@@ -26,6 +26,7 @@ Library/*.sln
 Library/*.aps
 Library/*.vcxproj.user
 slcan-cppcheck-build-dir
+checker.txt
 Binaries
 Includes
 Tests
