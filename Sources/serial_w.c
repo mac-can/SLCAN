@@ -51,7 +51,7 @@
  *
  *  @author      $Author: haumea $
  *
- *  @version     $Rev: 803 $
+ *  @version     $Rev: 807 $
  *
  *  @addtogroup  serial
  *  @{
@@ -238,9 +238,9 @@ int sio_connect(sio_port_t port, const char *device, const sio_attr_t *attr) {
 #if defined(_UNICODE)
     if ((serial->hPort = CreateFileA(path, (GENERIC_READ | GENERIC_WRITE),
 #else
-    if ((serial->hPort = CreateFileW(path, (GENERIC_READ | GENERIC_WRITE),
+    if ((serial->hPort = CreateFile(path, (GENERIC_READ | GENERIC_WRITE),
 #endif
-    0,                              // exclusive access
+        0,                              // exclusive access
         NULL,                           // no security attrs
         OPEN_EXISTING,                  // default for devices other than files
         0,                              // flags: no overlapped I/O
