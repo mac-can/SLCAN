@@ -47,9 +47,9 @@
  *
  *  @brief       Lawicel SLCAN protocol.
  *
- *  @author      $Author: haumea $
+ *  @author      $Author: quaoar $
  *
- *  @version     $Rev: 805 $
+ *  @version     $Rev: 808 $
  *
  *  @defgroup    slcan Lawicel SLCAN Protocol
  *  @{
@@ -79,7 +79,7 @@
 #else
 #define SLCANAPI  extern
 #endif
- /** @} */
+/** @} */
 
 /*  -----------  defines  ------------------------------------------------
  */
