@@ -1,7 +1,7 @@
 #
 #	Controller Area Network - Lawicel SLCAN Protocol (Serial-Line CAN)
 #
-#	Copyright (C) 2016-2024  Uwe Vogt, UV Software, Berlin (info@uv-software.com)
+#	Copyright (c) 2016-2024  Uwe Vogt, UV Software, Berlin (info@uv-software.com)
 #	All rights reserved.
 #
 #	This file is part of SLCAN.
@@ -49,9 +49,21 @@ current_OS := $(patsubst CYGWIN%,Cygwin,$(current_OS))
 current_OS := $(patsubst MINGW%,MinGW,$(current_OS))
 current_OS := $(patsubst MSYS%,MinGW,$(current_OS))
 
-HOME_DIR = ..
+MAJOR = 1
+MINOR = 0
+PATCH = 0
 
-SERIAL_DIR = $(HOME_DIR)/Sources
+ifeq ($(PATCH),0)
+VERSION = $(MAJOR).$(MINOR)
+else
+VERSION = $(MAJOR).$(MINOR).$(PATCH)
+endif
+
+HOME_DIR = ..
+MAIN_DIR = .
+
+SOURCE_DIR = $(HOME_DIR)/Sources
+SERIAL_DIR = $(SOURCE_DIR)
 
 OBJECTS = $(OUTDIR)/slcan.o $(OUTDIR)/serial.o \
 	$(OUTDIR)/buffer.o $(OUTDIR)/queue.o $(OUTDIR)/logger.o
@@ -61,11 +73,6 @@ ifeq ($(current_OS),Darwin) # macOS - libSLCAN.dylib
 
 LIBRARY = libSLCAN
 
-MAJOR = 0
-MINOR = 1
-PATCH = 0
-
-VERSION = $(MAJOR).$(MINOR).$(PATCH)
 TARGET  = $(LIBRARY).$(VERSION).dylib
 STATIC  = $(LIBRARY).a
 
@@ -81,7 +88,7 @@ DEFINES = -DOPTION_SLCAN_DYLIB=1 \
 	-DOPTION_SERIAL_DEBUG_LEVEL=0 \
 	-DOPTION_SLCAN_DEBUG_LEVEL=0
 
-HEADERS = -I$(SERIAL_DIR) \
+HEADERS = -I$(SOURCE_DIR) \
 
 LIBRARIES = -lpthread
 
@@ -117,11 +124,6 @@ ifeq ($(current_OS),$(filter $(current_OS),Linux Cygwin)) # linux - libslcan.so.
 
 LIBRARY = libslcan
 
-MAJOR = 0
-MINOR = 1
-PATCH = 0
-
-VERSION = $(MAJOR).$(MINOR).$(PATCH)
 SONAME  = $(LIBRARY).so.1
 TARGET  = $(SONAME).$(VERSION)
 STATIC  = $(LIBRARY).a
@@ -134,7 +136,7 @@ DEFINES = -DOPTION_SLCAN_SO=1 \
 	-DOPTION_SERIAL_DEBUG_LEVEL=0 \
 	-DOPTION_SLCAN_DEBUG_LEVEL=0
 
-HEADERS = -I$(SERIAL_DIR)
+HEADERS = -I$(SOURCE_DIR)
 
 CFLAGS += -fPIC -O2 -Wall -Wno-parentheses \
 	-fno-strict-aliasing \

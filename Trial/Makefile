@@ -20,7 +20,8 @@ INSTALL = ~/bin
 HOME_DIR = ..
 MAIN_DIR = ./Sources
 
-SERIAL_DIR = $(HOME_DIR)/Sources
+SOURCE_DIR = $(HOME_DIR)/Sources
+SERIAL_DIR = $(SOURCE_DIR)
 
 OBJECTS = $(OUTDIR)/slcan.o $(OUTDIR)/serial.o \
 	$(OUTDIR)/buffer.o $(OUTDIR)/queue.o $(OUTDIR)/logger.o \
@@ -29,7 +30,7 @@ OBJECTS = $(OUTDIR)/slcan.o $(OUTDIR)/serial.o \
 DEFINES = -DOPTION_SERIAL_DEBUG_LEVEL=1 \
 	-DOPTION_SLCAN_DEBUG_LEVEL=1
 
-HEADERS = -I$(SERIAL_DIR) \
+HEADERS = -I$(SOURCE_DIR) \
 	-I$(MAIN_DIR)
 
 LIBRARIES = -lpthread
@@ -53,7 +54,7 @@ LDFLAGS += -arch arm64 -arch x86_64
 endif
 
 CHECKER  = warning,information
-IGNORE   = -i can_msg.c -i can_dev.c
+IGNORE   = -i *_w.c
 ifeq ($(HUNTER),BUGS)
 CHECKER += --bug-hunting
 endif
@@ -62,7 +63,7 @@ ifeq ($(current_OS),Darwin)  # macOS - libSLCAN.dylib
 CXX = clang++
 CC = clang
 LD = clang++
-else  # Linux, Cygwin - libSLCAN.so
+else  # Linux, Cygwin - libslcan.so
 CXX = g++
 CC = gcc
 LD = g++
