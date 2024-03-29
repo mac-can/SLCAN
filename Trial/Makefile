@@ -63,7 +63,7 @@ ifeq ($(current_OS),Darwin)  # macOS - libSLCAN.dylib
 CXX = clang++
 CC = clang
 LD = clang++
-else  # Linux, Cygwin - libSLCAN.so
+else  # Linux, Cygwin - libslcan.so
 CXX = g++
 CC = gcc
 LD = g++
