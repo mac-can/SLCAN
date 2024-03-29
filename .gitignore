@@ -1,5 +1,4 @@
 #.gitignore
-Sources/.svn
 Sources/build_no.h
 Trial/.objects
 Trial/.vs
@@ -15,11 +14,11 @@ Library/.objects
 Library/.vs
 Library/x64
 Library/x86
-Library/uvslcan
 Library/Debug_dll
 Library/Debug_lib
 Library/Release_dll
 Library/Release_lib
+Library/uvslcan
 Library/*.so.*
 Library/*.dylib
 Library/*.sln
@@ -29,6 +28,6 @@ slcan-cppcheck-build-dir
 checker.txt
 Binaries
 Includes
-Tests
+Testing
 .vscode
 *.log
