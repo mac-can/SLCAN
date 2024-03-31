@@ -27,13 +27,14 @@ OBJECTS = $(OUTDIR)/slcan.o $(OUTDIR)/serial.o \
 	$(OUTDIR)/buffer.o $(OUTDIR)/queue.o $(OUTDIR)/logger.o \
 	$(OUTDIR)/main.o
 
-DEFINES = -DOPTION_SERIAL_DEBUG_LEVEL=1 \
+DEFINES = -DOPTION_SERIAL_DEBUG_LEVEL=3 \
 	-DOPTION_SLCAN_DEBUG_LEVEL=1
 
 HEADERS = -I$(SOURCE_DIR) \
 	-I$(MAIN_DIR)
 
-LIBRARIES = -lpthread
+
+ifeq ($(current_OS),Darwin)  # macOS - libSLCAN.dylib
 
 CFLAGS += -O2 -Wall -Wno-parentheses \
 	-fno-strict-aliasing \
@@ -46,28 +47,44 @@ CXXFLAGS += -g -Wall -Wextra -pthread \
 
 LDFLAGS  += 
 
-ifeq ($(current_OS),Darwin)  # macOS - libSLCAN.dylib
 ifeq ($(BINARY),UNIVERSAL)
 CFLAGS += -arch arm64 -arch x86_64
 CXXFLAGS += -arch arm64 -arch x86_64
 LDFLAGS += -arch arm64 -arch x86_64
 endif
 
+LIBRARIES = -lpthread
+
 CHECKER  = warning,information
-IGNORE   = -i *_w.c
+IGNORE   = -i serial_w.c -i buffer_w.c -i queue_w.c -i logger_w.c
 ifeq ($(HUNTER),BUGS)
 CHECKER += --bug-hunting
 endif
-endif
-ifeq ($(current_OS),Darwin)  # macOS - libSLCAN.dylib
+
 CXX = clang++
 CC = clang
 LD = clang++
+
 else  # Linux, Cygwin - libslcan.so
+
+CFLAGS += -O2 -Wall -Wno-parentheses \
+	-fno-strict-aliasing \
+	$(DEFINES) \
+	$(HEADERS)
+
+CXXFLAGS += -g -Wall -Wextra -pthread \
+	$(DEFINES) \
+	$(HEADERS)
+
+LDFLAGS  += 
+
+LIBRARIES = -lpthread
+
 CXX = g++
 CC = gcc
 LD = g++
 endif
+
 RM = rm -f
 CP = cp -f
 
