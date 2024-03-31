@@ -1,7 +1,9 @@
 ### Lawicel SLCAN Protocol (Serial-Line CAN)
 
-_Copyright &copy; 2016,2020-2024 Uwe Vogt, UV Software, Berlin (info@uv-software.com)_ \
-_All rights reserved._
+_Copyright &copy; 2016,2020-2024 Uwe Vogt, UV Software, Berlin (info@uv-software.com)_
+
+![macOS Build](https://github.com/mac-can/SLCAN/actions/workflows/macOS-Build.yml/badge.svg)
+![MSBuild x64](https://github.com/mac-can/SLCAN/actions/workflows/msbuild-x64.yml/badge.svg)
 
 # SLCAN
 
@@ -70,7 +72,7 @@ Windows&reg; (x64 operating system):
 
 #### macOS Sonoma
 
-- macOS Sonoma (14.4) on a Mac mini (M1, 2020)
+- macOS Sonoma (14.4.1) on a Mac mini (M1, 2020)
 - Apple clang version 15.0.0 (clang-1500.3.9.4)
 - Xcode Version 15.3 (15E204a)
 
@@ -86,14 +88,14 @@ Windows&reg; (x64 operating system):
 - Apple LLVM version 10.0.0 (clang-1000.11.45.5)
 - Xcode Version 10.1 (10B61)
 
-#### Debian Bullseye (11.2)
+#### Debian "bookworm" (12.5)
 
-- Debian 4.19.160-2 (2020-11-18) x86_64 GNU/Linux
-- gcc (Debian 10.2.1-6) 10.2.1 20210110
+- Debian 6.1,76-1 (2024-02-01) x86_64 GNU/Linux
+- gcc (Debian 12.2.0-14) 12.2.0
 
 #### Cygwin (64-bit)
 
-- Cygwin  3.5.1-1.x86_64 under Windows 10 Pro
+- Cygwin 3.5.1-1.x86_64 2024-02-27 11:54 UTC x86_64 Cygwin
 - GNU C/C++ Compiler (GCC) 11.4.0
 
 #### Windows 10 & 11
@@ -136,5 +138,5 @@ _If you connect your CAN device to a real CAN network when using this library, y
 
 ### Contact
 
-E-Mail: mailto://info@uv-software.com \
-Internet: https://www.uv-software.com
+E-Mail: mailto://info@mac.can.com \
+Internet: https://www.mac-can.net
