@@ -1,4 +1,4 @@
-### Lawicel SLCAN Protocol (Serial-Line CAN)
+### Library for Lawicel SLCAN Protocol (Serial-Line CAN)
 
 _Copyright &copy; 2016,2020-2024 Uwe Vogt, UV Software, Berlin (info@uv-software.com)_
 
