@@ -42,7 +42,7 @@
     <ClInclude Include="..\Sources\slcan.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include=".\Sources\resource.h">
+    <ClInclude Include=".\resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
