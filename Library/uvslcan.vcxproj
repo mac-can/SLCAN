@@ -278,7 +278,7 @@
     <ClInclude Include="..\Sources\slcan.h" />
     <ClInclude Include=".\Sources\framework.h" />
     <ClInclude Include=".\Sources\pch.h" />
-    <ClInclude Include=".\Sources\resource.h" />
+    <ClInclude Include=".\resource.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Sources\buffer_w.c">

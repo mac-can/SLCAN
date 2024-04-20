@@ -2,13 +2,13 @@
 
 set VCVARS="True"
 set TRIAL="True"
-set LIBD="False"
+set LIBDB="True"
 
-rem parse arguments: [NOVARS] [NOTRIAL] [DEBUG]
+rem parse arguments: [NOVARS] [NOTRIAL] [NODEBUG]
 :LOOP
 if "%1" == "NOVARS" set VCVARS="False"
 if "%1" == "NOTRIAL" set TRIAL="False"
-if "%1" == "DEBUG" set LIBD="True"
+if "%1" == "NODEBUG" set LIBDB="False"
 SHIFT
 if not "%1" == "" goto LOOP
 
@@ -35,7 +35,7 @@ if errorlevel 1 goto end
 call msbuild.exe .\Library\uvslcan.vcxproj /t:Clean;Build /p:"Configuration=Release_lib";"Platform=Win32"
 if errorlevel 1 goto end
 
-if %LIBD% == "True" (
+if %LIBDB% == "True" (
    call msbuild.exe .\Library\uvslcan.vcxproj /t:Clean;Build /p:"Configuration=Debug_lib";"Platform=Win32"
    if errorlevel 1 goto end
 )
@@ -55,7 +55,7 @@ copy /Y .\Library\Release_lib\uvslcan.lib %BIN%
 copy /Y .\Library\Release_lib\uvslcan.pdb %BIN%
 echo "Static library (x64)" > %BIN%\readme.txt
 set BIN=%BIN%\Debug
-if %LIBD% == "True" (
+if %LIBDB% == "True" (
    if not exist %BIN% mkdir %BIN%
    copy /Y .\Library\Debug_lib\uvslcan.lib %BIN%
    copy /Y .\Library\Debug_lib\uvslcan.pdb %BIN%

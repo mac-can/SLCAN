@@ -3,7 +3,7 @@ echo "/*  -- Do not commit this file --" > ./Sources/build_no.h
 echo " *" >> ./Sources/build_no.h
 echo " *  Controller Area Network - Lawicel SLCAN Protocol (Serial-Line CAN)" >> ./Sources/build_no.h
 echo " *" >> ./Sources/build_no.h
-echo " *  Copyright (c) 2016-2022  Uwe Vogt, UV Software, Berlin (info@uv-software.com)" >> ./Sources/build_no.h
+echo " *  Copyright (c) 2016-2024 Uwe Vogt, UV Software, Berlin (info@uv-software.com)" >> ./Sources/build_no.h
 echo " *  All rights reserved." >> ./Sources/build_no.h
 echo " *" >> ./Sources/build_no.h
 echo " *  This file is part of SLCAN." >> ./Sources/build_no.h
