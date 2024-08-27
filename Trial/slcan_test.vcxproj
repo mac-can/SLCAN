@@ -16,6 +16,7 @@
     <ClCompile Include="..\Sources\queue_w.c" />
     <ClCompile Include="..\Sources\serial_w.c" />
     <ClCompile Include="..\Sources\slcan.c" />
+    <ClCompile Include="..\Sources\timer_w.c" />
     <ClCompile Include="Sources\main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -26,6 +27,7 @@
     <ClInclude Include="..\Sources\serial.h" />
     <ClInclude Include="..\Sources\serial_attr.h" />
     <ClInclude Include="..\Sources\slcan.h" />
+    <ClInclude Include="..\Sources\timer.h" />
     <ClInclude Include="Sources\debug.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

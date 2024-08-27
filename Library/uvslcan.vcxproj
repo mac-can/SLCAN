@@ -276,6 +276,7 @@
     <ClInclude Include="..\Sources\serial.h" />
     <ClInclude Include="..\Sources\serial_attr.h" />
     <ClInclude Include="..\Sources\slcan.h" />
+    <ClInclude Include="..\Sources\timer.h" />
     <ClInclude Include=".\Sources\framework.h" />
     <ClInclude Include=".\Sources\pch.h" />
     <ClInclude Include=".\resource.h" />
@@ -330,6 +331,16 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug_lib|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release_dll|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release_lib|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\Sources\timer_w.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release_dll|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release_lib|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug_dll|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug_lib|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release_dll|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release_lib|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug_dll|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug_lib|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include=".\Sources\dllmain.cpp" />
     <ClCompile Include=".\Sources\pch.cpp">

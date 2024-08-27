@@ -28,7 +28,11 @@
 
 #if !defined(_WIN32) && !defined(_WIN64)
 #if defined(__APPLE__)
-#define SERIAL_PORT  "/dev/tty.usbserial-LW4KOZQW"
+#define TTY_LAWICEL1  "/dev/tty.usbserial-LW4KOZQW"
+#define TTY_LAWICEL2  "/dev/tty.usbserial-LW917KWK"
+#define TTY_CANABLE1  "/dev/tty.usbmodem2061389354311"
+#define TTY_CANABLE2  "/dev/tty.usbmodem2082386554311"
+#define SERIAL_PORT    TTY_LAWICEL1
 #elif !defined(__CYGWIN__)
 #define SERIAL_PORT  "/dev/ttyUSB0"
 #else
@@ -102,11 +106,14 @@ end:
 
 static int main_slcan(int argc, char *argv[]) {
     slcan_port_t port = NULL;
+    uint8_t hw = 0x00;
+    uint8_t sw = 0x00;
+    uint32_t sn = 0;
     int rc = 0;
     (void)argc;
     (void)argv;
 
-    fprintf(stderr, "!!! %s\n", slcan_api_version(NULL, NULL, NULL));
+    fprintf(stdout, "!!! %s\n", slcan_api_version(NULL, NULL, NULL));
 
     port = slcan_create(8U);
     if (!port) {
@@ -117,6 +124,20 @@ static int main_slcan(int argc, char *argv[]) {
     if (rc < 0) {
         fprintf(stderr, "+++ error: slcan_connect returnd %i (%i)\n", rc, errno);
         goto end;
+    }
+    rc = slcan_set_ack(port, true);
+    if (rc < 0) {
+        fprintf(stderr, "+++ error: slcan_set_ack true returnd %i (%i)\n", rc, errno);
+        goto end;
+    }
+    rc = slcan_version_number(port, NULL, NULL);
+    if (rc < 0) {
+        rc = slcan_set_ack(port, false);
+        if (rc < 0) {
+            fprintf(stderr, "+++ error: slcan_set_ack false returnd %i (%i)\n", rc, errno);
+            goto end;
+        }
+        fprintf(stdout, "!!! Using CANable protocol (w/o ACK/NACK feedback)\n");
     }
     rc = slcan_setup_bitrate(port, CAN_250K);
     if (rc < 0) {
@@ -131,10 +152,19 @@ static int main_slcan(int argc, char *argv[]) {
     while (running) {
         usleep(10);
     }
+    fputc('\n', stdout);
     rc = slcan_close_channel(port);
     if (rc < 0) {
         fprintf(stderr, "+++ error: slcan_close_channel returnd %i (%i)\n", rc, errno);
         goto teardown;
+    }
+    rc = slcan_version_number(port, &hw, &sw);
+    if (rc >= 0) {
+        fprintf(stdout, "!!! hardware: %u.%u\n!!! firmware: %u.%u\n", (hw >> 4), (hw & 0x0F), (sw >> 4), (sw & 0x0F));
+    }
+    rc = slcan_serial_number(port, &sn);
+    if (rc >= 0) {
+        fprintf(stdout, "!!! serial number: %X\n", sn);
     }
 teardown:
     rc = slcan_disconnect(port);
@@ -164,6 +194,7 @@ int main(int argc, char *argv[]) {
     }
     LOGGER_INIT(LOG_FILE);
     fprintf(stdout, "!!! %s %s %s\n",__FILE__,__DATE__,__TIME__);
+    fprintf(stdout, "!!! Serial port: %s\n", SERIAL_PORT);
 #if (OPTION_COMPILE_SERIAL != 0)
     rc = main_serial(argc, argv);
 #else

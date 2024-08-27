@@ -49,9 +49,9 @@ current_OS := $(patsubst CYGWIN%,Cygwin,$(current_OS))
 current_OS := $(patsubst MINGW%,MinGW,$(current_OS))
 current_OS := $(patsubst MSYS%,MinGW,$(current_OS))
 
-MAJOR = 1
+MAJOR = 2
 MINOR = 0
-PATCH = 1
+PATCH = 0
 
 ifeq ($(PATCH),0)
 VERSION = $(MAJOR).$(MINOR)
@@ -66,7 +66,8 @@ SOURCE_DIR = $(HOME_DIR)/Sources
 SERIAL_DIR = $(SOURCE_DIR)
 
 OBJECTS = $(OUTDIR)/slcan.o $(OUTDIR)/serial.o \
-	$(OUTDIR)/buffer.o $(OUTDIR)/queue.o $(OUTDIR)/logger.o
+	$(OUTDIR)/buffer.o $(OUTDIR)/queue.o \
+	$(OUTDIR)/timer.o $(OUTDIR)/logger.o
 
 
 ifeq ($(current_OS),Darwin) # macOS - libSLCAN.dylib
@@ -189,27 +190,27 @@ incdir:
 	$(CP) $(SERIAL_DIR)/serial_attr.h $(INCDIR)
 
 clean:
-	$(RM) $(TARGET) $(STATIC) $(OUTDIR)/*.o $(OUTDIR)/*.d
+	@-$(RM) $(TARGET) $(STATIC) $(OUTDIR)/*.o $(OUTDIR)/*.d
 
 pristine:
 ifeq ($(current_OS),Darwin)
-	$(RM) *.dylib *.a $(OUTDIR)/*.o $(OUTDIR)/*.d
-	$(RM) $(BINDIR)/*.dylib $(BINDIR)/*.a
+	@-$(RM) *.dylib *.a $(OUTDIR)/*.o $(OUTDIR)/*.d
+	@-$(RM) $(BINDIR)/*.dylib $(BINDIR)/*.a
 endif
 ifeq ($(current_OS),$(filter $(current_OS),Linux Cygwin))
-	$(RM) *.so *.a $(OUTDIR)/*.o $(OUTDIR)/*.d
-	$(RM) $(BINDIR)/*.so $(BINDIR)/*.a
+	@-$(RM) *.so *.a $(OUTDIR)/*.o $(OUTDIR)/*.d
+	@-$(RM) $(BINDIR)/*.so $(BINDIR)/*.a
 endif
 
 install:
 	@echo "Copying library file..."
 	$(CP) $(TARGET) $(INSTALL)
 ifeq ($(current_OS),Darwin)
-	$(RM) $(INSTALL)/$(LIBRARY).dylib ; $(LN) $(INSTALL)/$(TARGET) $(INSTALL)/$(LIBRARY).dylib
+	@-$(RM) $(INSTALL)/$(LIBRARY).dylib ; $(LN) $(INSTALL)/$(TARGET) $(INSTALL)/$(LIBRARY).dylib
 endif
 ifeq ($(current_OS),$(filter $(current_OS),Linux Cygwin))
-	$(RM) $(INSTALL)/$(SONAME) ; ln -s $(INSTALL)/$(TARGET) $(INSTALL)/$(SONAME)
-	$(RM) $(INSTALL)/$(LIBRARY).so ; ln -s $(INSTALL)/$(SONAME) $(INSTALL)/$(LIBRARY).so
+	@-$(RM) $(INSTALL)/$(SONAME) ; ln -s $(INSTALL)/$(TARGET) $(INSTALL)/$(SONAME)
+	@-$(RM) $(INSTALL)/$(LIBRARY).so ; ln -s $(INSTALL)/$(SONAME) $(INSTALL)/$(LIBRARY).so
 endif
 
 
@@ -224,6 +225,9 @@ $(OUTDIR)/buffer.o: $(SERIAL_DIR)/buffer.c $(SERIAL_DIR)/buffer_p.c
 	$(CC) $(CFLAGS) -MMD -MF $*.d -o $@ -c $<
 
 $(OUTDIR)/queue.o: $(SERIAL_DIR)/queue.c $(SERIAL_DIR)/queue_p.c
+	$(CC) $(CFLAGS) -MMD -MF $*.d -o $@ -c $<
+
+$(OUTDIR)/timer.o: $(SERIAL_DIR)/timer.c $(SERIAL_DIR)/timer_p.c
 	$(CC) $(CFLAGS) -MMD -MF $*.d -o $@ -c $<
 
 $(OUTDIR)/logger.o: $(SERIAL_DIR)/logger.c $(SERIAL_DIR)/logger_p.c
