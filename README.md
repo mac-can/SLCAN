@@ -9,6 +9,57 @@ _Copyright &copy; 2016,2020-2024 Uwe Vogt, UV Software, Berlin (info@uv-software
 
 Implementation of Lawicel SLCAN protocol.
 
+## Lawicel SLCAN Protocol
+
+### Supported commands
+
+- `O[CR]` - Open the CAN channel
+- `C[CR]` - Close the CAN channel
+- `Sn[CR]` - Setup with standard CAN bit-rates (`0` = 10kbps, `1` = 20kbps, ..., `8` = 1000kbps)
+- `sxxyy[CR]` -  Setup with BTR0/BTR1 CAN bit-rates (`xx` = BTR0, `yy` = BTR1)
+- `tiiildd...[CR]` - Transmit a standard (11bit) CAN frame (`iii` = Id., `l` = DLC, `dd` = Data)
+- `Tiiiiiiiildd...[CR]` - Transmit an extended (29bit) CAN frame  (`iiiiiiii` = Id., `l` = DLC, `dd` = Data)
+- `riiil[CR]` - Transmit an standard RTR (11bit) CAN frame (`iii` = Id., `l` = DLC)
+- `Riiiiiiiil[CR]` - Transmit an extended RTR (29bit) CAN frame (`iiiiiiii` = Id., `l` = DLC)
+- `F[CR]` - Read Status Flags (returns 8-bit status register; see below)
+- `Mxxxxxxxx[CR]` - Sets Acceptance Code Register (AC0, AC1, AC2 & AC3; LSB first)
+- `mxxxxxxxx[CR]` - Sets Acceptance Mask Register (AM0, AM1, AM2 & AM3; LSB first)
+- `V[CR]` - Get Version number of both CANUSB hardware and software (returns `Vhhss[CR]` - `hh` = Hw, `ss` = Sw)
+- `N[CR]` - Get Serial number of the CANUSB (returns `Naaaa[CR]` - `aaaa` = S/N; alpha-numerical)
+
+Note: Channel configuration commands must be sent before opening the channel. The channel must be opened before transmitting frames.
+
+### CANable SLCAN Protocol (Option 1)
+
+Supported commands
+
+- `O` - Open channel
+- `C` - Close channel
+- `S0` - Set bitrate to 10k
+- `S1` - Set bitrate to 20k
+- `S2` - Set bitrate to 50k
+- `S3` - Set bitrate to 100k
+- `S4` - Set bitrate to 125k
+- `S5` - Set bitrate to 250k
+- `S6` - Set bitrate to 500k
+- `S7` - Set bitrate to 750k
+- `S8` - Set bitrate to 1M
+- `M0` - Set mode to normal mode (default) *(not supported)*
+- `M1` - Set mode to silent mode *(not supported)*
+- `A0` - Disable automatic retransmission *(not supported)*
+- `A1` - Enable automatic retransmission (default) *(not supported)*
+- `TIIIIIIIILDD...` - Transmit data frame (Extended ID) [ID, length, data]
+- `tIIILDD...` - Transmit data frame (Standard ID) [ID, length, data]
+- `RIIIIIIIIL` - Transmit remote frame (Extended ID) [ID, length]
+- `rIIIL` - Transmit remote frame (Standard ID) [ID, length]
+- `V` - Returns firmware version and remote path as a string
+
+Note: Channel configuration commands must be sent before opening the channel. The channel must be opened before transmitting frames.
+
+**Note: The firmware currently does not provide any ACK/NACK feedback for serial commands.**
+
+Note: The implementation currently does not support CAN FD commands and frame format.
+
 ## SLCAN API
 
 ```C
@@ -17,6 +68,7 @@ int slcan_destroy(slcan_port_t port);
 int slcan_connect(slcan_port_t port, const char *device, const sio_attr_t *attr);
 int slcan_disconnect(slcan_port_t port);
 int slcan_get_attr(slcan_port_t port, slcan_attr_t *attr);
+int slcan_set_ack(slcan_port_t port, bool on);
 int slcan_setup_bitrate(slcan_port_t port, uint8_t index);
 int slcan_setup_btr(slcan_port_t port, uint16_t btr);
 int slcan_open_channel(slcan_port_t port);
@@ -72,13 +124,13 @@ Windows&reg; (x64 operating system):
 
 #### macOS Sonoma
 
-- macOS Sonoma (14.4.1) on a Mac mini (M1, 2020)
+- macOS Sonoma (14.6.1) on a Mac mini (M1, 2020)
 - Apple clang version 15.0.0 (clang-1500.3.9.4)
-- Xcode Version 15.3 (15E204a)
+- Xcode Version 15.4 (15F31d)
 
 #### macOS Monterey
 
-- macOS Monterey (12.7.4) on a MacBook Pro (2019)
+- macOS Monterey (12.7.6) on a MacBook Pro (2019)
 - Apple clang version 13.0.0 (clang-1300.0.29.30)
 - Xcode Version 13.2.1 (13C100)
 
@@ -95,16 +147,17 @@ Windows&reg; (x64 operating system):
 
 #### Cygwin (64-bit)
 
-- Cygwin 3.5.1-1.x86_64 2024-02-27 11:54 UTC x86_64 Cygwin
-- GNU C/C++ Compiler (GCC) 11.4.0
+- Cygwin 3.5.4-1.x86_64 2024-08-25 16:52 UTC x86_64 Cygwin
+- GNU C/C++ Compiler (GCC) 12.4.0
 
 #### Windows 10 & 11
 
-- Microsoft Visual Studio Community 2022 (Version 17.9.4)
+- Microsoft Visual Studio Community 2022 (Version 17.11.1)
 
 ### CAN Hardware
 
 - Lawicel CANUSB (Hardware 1.0, Firmware 1.1)
+- DSD TECH SH-C31A (CANable 2.0 open hardware)
 
 ## Known Bugs and Caveats
 
@@ -115,15 +168,14 @@ Windows&reg; (x64 operating system):
 
 ## This and That
 
-The documentation of the SLCAN protocol can be found on [Lawicel CANUSB product page](https://www.canusb.com/products/canusb).
+The documentation of the SLCAN protocol can be found on [Lawicel CANUSB](https://www.canusb.com/products/canusb) product page.
+For the CANable 2.0 adaptation, see the [CANable Firmware](https://github.com/normaldotcom/canable-fw) documentation on GitHub. 
 
 ### Dual-License
 
 Except where otherwise noted, this work is dual-licensed under the terms of the BSD 2-Clause "Simplified" License
 and under the terms of the GNU General Public License v3.0 (or any later version).
 You can choose between one of them if you use these portions of this work in whole or in part.
-
-`SPDX-License-Identifier: BSD-2-Clause OR GPL-3.0-or-later`
 
 ### Trademarks
 
