@@ -24,7 +24,8 @@ SOURCE_DIR = $(HOME_DIR)/Sources
 SERIAL_DIR = $(SOURCE_DIR)
 
 OBJECTS = $(OUTDIR)/slcan.o $(OUTDIR)/serial.o \
-	$(OUTDIR)/buffer.o $(OUTDIR)/queue.o $(OUTDIR)/logger.o \
+	$(OUTDIR)/buffer.o $(OUTDIR)/queue.o \
+	$(OUTDIR)/timer.o  $(OUTDIR)/logger.o \
 	$(OUTDIR)/main.o
 
 DEFINES = -DOPTION_SERIAL_DEBUG_LEVEL=3 \
@@ -113,10 +114,10 @@ else
 endif
 
 clean:
-	$(RM) $(TARGET) $(OUTDIR)/*.o $(OUTDIR)/*.d
+	@-$(RM) $(TARGET) $(OUTDIR)/*.o $(OUTDIR)/*.d
 
 pristine:
-	$(RM) $(TARGET) $(OUTDIR)/*.o $(OUTDIR)/*.d
+	@-$(RM) $(TARGET) $(OUTDIR)/*.o $(OUTDIR)/*.d
 
 install:
 	$(CP) $(TARGET) $(INSTALL)
@@ -137,6 +138,9 @@ $(OUTDIR)/buffer.o: $(SERIAL_DIR)/buffer.c $(SERIAL_DIR)/buffer_p.c
 	$(CC) $(CFLAGS) -MMD -MF $*.d -o $@ -c $<
 
 $(OUTDIR)/queue.o: $(SERIAL_DIR)/queue.c $(SERIAL_DIR)/queue_p.c
+	$(CC) $(CFLAGS) -MMD -MF $*.d -o $@ -c $<
+
+$(OUTDIR)/timer.o: $(SERIAL_DIR)/timer.c $(SERIAL_DIR)/timer_p.c
 	$(CC) $(CFLAGS) -MMD -MF $*.d -o $@ -c $<
 
 $(OUTDIR)/logger.o: $(SERIAL_DIR)/logger.c $(SERIAL_DIR)/logger_p.c

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		44CFC92F2C7DD7A100588246 /* timer_p.c in Sources */ = {isa = PBXBuildFile; fileRef = 44CFC92E2C7DD7A100588246 /* timer_p.c */; };
 		44FB506C2C79EF69002F55BE /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 44FB506A2C79EF69002F55BE /* main.cpp */; };
 		44FB50792C79EF9E002F55BE /* logger_p.c in Sources */ = {isa = PBXBuildFile; fileRef = 44FB506D2C79EF9E002F55BE /* logger_p.c */; };
 		44FB507A2C79EF9E002F55BE /* slcan.c in Sources */ = {isa = PBXBuildFile; fileRef = 44FB50742C79EF9E002F55BE /* slcan.c */; };
@@ -28,6 +29,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		44CFC92D2C7DD7A100588246 /* timer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = timer.h; path = ../Sources/timer.h; sourceTree = "<group>"; };
+		44CFC92E2C7DD7A100588246 /* timer_p.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = timer_p.c; path = ../Sources/timer_p.c; sourceTree = "<group>"; };
 		44FB505F2C79EEFE002F55BE /* slcan_test */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = slcan_test; sourceTree = BUILT_PRODUCTS_DIR; };
 		44FB506A2C79EF69002F55BE /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = Sources/main.cpp; sourceTree = "<group>"; };
 		44FB506B2C79EF69002F55BE /* debug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = debug.h; path = Sources/debug.h; sourceTree = "<group>"; };
@@ -87,6 +90,8 @@
 				44FB50782C79EF9E002F55BE /* serial.h */,
 				44FB50742C79EF9E002F55BE /* slcan.c */,
 				44FB50722C79EF9E002F55BE /* slcan.h */,
+				44CFC92E2C7DD7A100588246 /* timer_p.c */,
+				44CFC92D2C7DD7A100588246 /* timer.h */,
 				44FB506B2C79EF69002F55BE /* debug.h */,
 				44FB506A2C79EF69002F55BE /* main.cpp */,
 			);
@@ -151,6 +156,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				44FB507A2C79EF9E002F55BE /* slcan.c in Sources */,
+				44CFC92F2C7DD7A100588246 /* timer_p.c in Sources */,
 				44FB50792C79EF9E002F55BE /* logger_p.c in Sources */,
 				44FB507B2C79EF9E002F55BE /* serial_p.c in Sources */,
 				44FB507C2C79EF9E002F55BE /* queue_p.c in Sources */,
