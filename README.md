@@ -142,7 +142,7 @@ Windows&reg; (x64 operating system):
 
 #### Debian "bookworm" (12.5)
 
-- Debian 6.1,76-1 (2024-02-01) x86_64 GNU/Linux
+- Debian 6.1.99-1 (2024-07-15) x86_64 GNU/Linux
 - gcc (Debian 12.2.0-14) 12.2.0
 
 #### Cygwin (64-bit)
@@ -183,6 +183,7 @@ Mac and macOS are trademarks of Apple Inc., registered in the U.S. and other cou
 Windows is a registered trademarks of Microsoft Corporation in the United States and/or other countries. \
 POSIX is a registered of the Institute of Electrical and Electronic Engineers, Inc. \
 Linux is a registered trademark of Linus Torvalds. \
+Cygwin is a registered trademark of Red Hat, Inc. \
 All other company, product and service names mentioned herein may be trademarks, registered trademarks, or service marks of their respective owners.
 
 ### Hazard Note
